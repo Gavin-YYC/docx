@@ -1,5 +1,7 @@
 # node-docx
 
+> Forked from https://github.com/schoeu/docx
+
 > markdown文当平台，支持文件夹名配置，文档排序，浏览。
 
 [![NPM Version](https://img.shields.io/npm/v/docx.svg)](https://npmjs.org/package/node-docx)
@@ -11,7 +13,7 @@
 
 1. 下载docx库
 ```
-git clone https://github.com/schoeu/docx.git
+git clone https://github.com/Gavin-YYC/docx.git
 ```
 
 2. CD到docx目录下
@@ -96,18 +98,21 @@ npm start /xxx/map.json
 
   // header条标题,可选
   "headText": "PSFE-DOC",
-  
+
   // 展示主题,可选, 开箱自带两套皮肤default,antd,默认为default.
   "theme": "default",
-  
+
   // 预处理脚本定制,填写脚本路径即可,可选
   "preprocessscript":"",
-    
+
   // page title,可选
   "title": "PSFE",
 
   // 默认文档路径,支持相对,绝对路径,可选
   "index": "/readme.md",
+
+  // 虚拟静态资源路径
+  "assetsDir": "/static/",
 
   // 是否启用拼音搜索, 启用后可以使用全拼或拼音首字母进行搜索, 可选, 默认为false
   "usePinyin": false,

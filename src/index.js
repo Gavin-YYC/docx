@@ -95,7 +95,9 @@ Docx.prototype = {
         app.set('view engine', HBS_EXTNAME);
         app.set('views', me.themePath);
 
-        app.use(express.static(path.join(themePath, 'static')));
+        // 静态资源路径
+        var assetsDir = config.get('assetsDir');
+        app.use(assetsDir, express.static(path.join(themePath, 'static')));
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({extended: false}));
 

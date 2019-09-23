@@ -1,6 +1,6 @@
 {
-  "name": "node-docx",
-  "version": "1.5.4",
+  "name": "@youc/docx",
+  "version": "1.0.1",
   "description": "document management",
   "main": "index.js",
   "scripts": {
@@ -10,19 +10,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/schoeu/docx.git"
+    "url": "git+https://github.com/Gavin-YYC/docx.git"
   },
   "keywords": [
     "markdown",
     "doc",
     "markdown management"
   ],
-  "author": "schoeu",
+  "author": "yangyoucun",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/schoeu/docx/issues"
+    "url": "https://github.com/Gavin-YYC/docx/issues"
   },
-  "homepage": "https://github.com/schoeu/docx#readme",
+  "homepage": "https://github.com/Gavin-YYC/docx#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",

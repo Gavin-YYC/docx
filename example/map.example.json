@@ -7,6 +7,7 @@
     "index": "/readme.md",
     "logPath": "./log",
     "theme": "antd",
+    "assetsDir": "/static",
     "supportInfo": "mailto:abc@163.com",
     "extUrls": {
         "label": "友情链接",
