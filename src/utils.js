@@ -142,11 +142,9 @@ module.exports = {
                 }
                 // 如果是文件
                 else {
-
                     if (/^\.md$|html$|htm$/i.test(path.extname(it))) {
                         var basename = path.basename(it, path.extname(it));
                         var title = me.getMdTitle(childPath);
-                        console.log(relPath);
                         dirCtt.push({
                             itemName: basename,
                             type: 'file',

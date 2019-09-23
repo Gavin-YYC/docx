@@ -208,6 +208,8 @@ Docx.prototype = {
             assetsDir: config.get('assetsDir')
         };
 
+        console.log(mdPath);
+
         mdPath = decodeURIComponent(mdPath);
         fs.readFile(mdPath, 'utf8', function (err, file) {
             var content = '';
@@ -280,6 +282,7 @@ Docx.prototype = {
         // 根据markdown文档生成文档树
         var walkData = utils.walker(config.get('path'), me.dirname);
         var dirMap = walkData.walkArr;
+        me.pathMap = walkData.pathMap;
         me.dirnameMap = walkData.dirnameMap;
         // 数据排序处理
         var sortedData = utils.dirSort(dirMap, me.dirname);
