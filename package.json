@@ -1,6 +1,6 @@
 {
   "name": "@youc/docx",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "document management",
   "main": "index.js",
   "scripts": {

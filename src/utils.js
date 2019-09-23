@@ -100,6 +100,7 @@ module.exports = {
         var me = this;
         var walkArr = [];
         var dirnameMap = {};
+        var pathMap = {};
         var confDirname = dirname || [];
         var ignorDor = config.get('ignoreDir');
         docWalker(dirs, walkArr);
@@ -145,12 +146,14 @@ module.exports = {
                     if (/^\.md$|html$|htm$/i.test(path.extname(it))) {
                         var basename = path.basename(it, path.extname(it));
                         var title = me.getMdTitle(childPath);
+                        console.log(relPath);
                         dirCtt.push({
                             itemName: basename,
                             type: 'file',
                             path: relPath,
                             title: title
                         });
+                        pathMap[relPath.toLowerCase()] = relPath;
                     }
                 }
             });
@@ -160,6 +163,7 @@ module.exports = {
 
         return {
             walkArr: walkArr,
+            pathMap: pathMap,
             dirnameMap: dirnameMap
         };
     },

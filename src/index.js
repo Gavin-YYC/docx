@@ -129,7 +129,17 @@ Docx.prototype = {
         });
 
         // markdown文件路由
-        app.get(/.+.md$/, me.mdHandler.bind(me));
+        app.get(/.+.md$/, function (req, res, next) {
+            var path = req.path.toLowerCase();
+            var realFile = me.pathMap[path];
+            if (realFile) {
+                req.realFile = realFile;
+                me.mdHandler(req, res, next);
+            }
+            else {
+                console.log('没有页面', path);
+            }
+        });
 
         // API: 搜索功能
         app.post('/api/search', function (req, res, next) {
@@ -190,9 +200,7 @@ Docx.prototype = {
         var headers = req.headers;
         var ua = headers['user-agent'] || '';
         var time = Date.now();
-
-        var relativePath = url.parse(req.originalUrl);
-        var pathName = relativePath.pathname || '';
+        var pathName = req.realFile || '';
         var mdPath = path.join(config.get('path'), pathName);
         var isPjax = headers['x-pjax'] === 'true';
 
