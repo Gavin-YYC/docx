@@ -87,6 +87,7 @@ Docx.prototype = {
         }
 
         var themePath = path.join(__dirname, '..', 'themes', config.get('theme'));
+        var staticDir = path.join(themePath, 'static');
         me.themePath = path.join(themePath, 'views');
 
         app.engine('hbs', hbs.express4({
@@ -95,9 +96,9 @@ Docx.prototype = {
         app.set('view engine', HBS_EXTNAME);
         app.set('views', me.themePath);
 
-        // 静态资源路径
+        // 静态资源访问
         var assetsDir = config.get('assetsDir');
-        app.use(assetsDir, express.static(path.join(themePath, 'static')));
+        app.use(assetsDir, express.static(staticDir));
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({extended: false}));
 
@@ -194,6 +195,11 @@ Docx.prototype = {
         var pathName = relativePath.pathname || '';
         var mdPath = path.join(config.get('path'), pathName);
         var isPjax = headers['x-pjax'] === 'true';
+
+        var pageData = {
+            assetsDir: config.get('assetsDir')
+        };
+
         mdPath = decodeURIComponent(mdPath);
         fs.readFile(mdPath, 'utf8', function (err, file) {
             var content = '';
@@ -222,12 +228,12 @@ Docx.prototype = {
                 }
                 // 否则返回整个模板
                 else {
-                    var parseObj = Object.assign(
-                        {}, me.locals,
-                        {navData: htmlStr,
-                            mdData: content,
-                            editPath: editPath
-                        });
+                    var parseObj = Object.assign({}, me.locals, {
+                        navData: htmlStr,
+                        mdData: content,
+                        editPath: editPath,
+                        pageData: pageData
+                    });
                     res.render('main', parseObj);
                 }
                 logger.info({
