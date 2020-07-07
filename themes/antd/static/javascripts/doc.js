@@ -96,13 +96,14 @@ function changeMenu() {
  * */
 $searchIpt.on('input focus', function (e) {
     var key = $searchIpt.val();
+    var g = window.docxGlobalData;
     if (!key.trim()) {
         $sug.hide();
         return;
     }
     $sug.show();
     $.ajax({
-        url: '/api/search',
+        url: g.searchApi,
         data: {
             name: key,
             type: 'title'
@@ -114,10 +115,11 @@ $searchIpt.on('input focus', function (e) {
         if (Array.isArray(rsData) && rsData.length) {
             rsData.forEach(function (it, i) {
                 var sugactCls = '';
+                var path = g.urlPre + it.path;
                 if (i === 0) {
                     sugactCls = 'docx-sugact';
                 }
-                htmlStr +=  '<li><a href="' + it.path + '" class="' + sugactCls + '">' + it.title + '</a></li>';
+                htmlStr +=  '<li><a href="' + path + '" class="' + sugactCls + '">' + it.title + '</a></li>';
             });
         }
         htmlStr += '<li class="docx-fullse"><a href="#">全文搜索<span class="hljs-string">' + key + '</span></a></li>';
@@ -127,8 +129,9 @@ $searchIpt.on('input focus', function (e) {
 
 $docxBd.on('click', '.docx-fullse', function () {
     var key = $searchIpt.val();
+    var g = window.docxGlobalData;
     $.ajax({
-        url: '/api/search',
+        url: window.docxGlobalData.searchApi,
         data: {
             name: key
         },
@@ -140,16 +143,17 @@ $docxBd.on('click', '.docx-fullse', function () {
         if (Array.isArray(rsData) && rsData.length) {
             rsData.forEach(function (it) {
                 var content = it.content || '';
+                var path = g.urlPre + it.path;
                 content = content.replace(/<(table).*?<\/\1>|<table.*?>|<\/table>/g, '');
                 htmlStr +=  [
                     '<div class="docx-search-art">',
                     '    <div class="docx-search-title">',
-                    '        <a href="' + it.path + '" class="doc-search-link">',
+                    '        <a href="' + path + '" class="doc-search-link">',
                     it.title,
                     '        </a>',
                     '    </div>',
                     '    <div class="docx-search-content">',
-                    '        <a href="' + it.path + '" class="doc-search-link">',
+                    '        <a href="' + path + '" class="doc-search-link">',
                     content,
                     '        </a>',
                     '    </div>',

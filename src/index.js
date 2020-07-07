@@ -70,6 +70,7 @@ Docx.prototype = {
 
         // 公共变量处理
         var headText = config.get('headText');
+        var urlPre = config.get('urlPre');
         me.locals = {
             headText: headText,
             title: config.get('title') || headText,
@@ -79,7 +80,9 @@ Docx.prototype = {
         };
 
         me.pageData = {
-            assetsDir: config.get('urlPre') + '/static'        
+            urlPre: urlPre,
+            searchApi: urlPre + '/api/search',
+            assetsDir: urlPre + '/static'        
         };
 
         // 读取缓存,用于搜索
@@ -125,10 +128,12 @@ Docx.prototype = {
      * */
     routes: function () {
         var me = this;
+        var urlPre = config.get('urlPre');
 
         // 文档主路径
-        app.get('/', function (req, res, next) {
-            res.redirect(config.get('index'));
+        app.get(urlPre + '/', function (req, res, next) {
+            var home = config.get('index').replace('.', '');
+            res.redirect(urlPre + home);
         });
 
         // markdown文件路由
@@ -145,7 +150,7 @@ Docx.prototype = {
         });
 
         // API: 搜索功能
-        app.post('/api/search', function (req, res, next) {
+        app.post(me.pageData.searchApi, function (req, res, next) {
             var key = req.body.name;
             var searchType = req.body.type;
             var searchRs = search.search(searchType, key);
@@ -157,7 +162,7 @@ Docx.prototype = {
         });
 
         // API: 文档更新钩子
-        app.all('/api/update', me.update.bind(me));
+        app.all(urlPre + '/api/update', me.update.bind(me));
 
         // 委托其他静态资源
         app.use('/', express.static(config.get('path')));

@@ -103,6 +103,12 @@
     </div>
 </div>
 
+<script>
+window.docxGlobalData = window.docxGlobalData || {};
+var g = window.docxGlobalData;
+g.searchApi = '{{pageData.searchApi}}' || '/api/search';
+g.urlPre = '{{pageData.urlPre}}';
+</script>
 <script src="{{pageData.assetsDir}}/javascripts/jq.min.js"></script>
 <script src="{{pageData.assetsDir}}/javascripts/metisMenu.min.js"></script>
 <script src="{{pageData.assetsDir}}/javascripts/fullImage.js"></script>
