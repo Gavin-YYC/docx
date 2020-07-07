@@ -132,8 +132,7 @@ Docx.prototype = {
 
         // 文档主路径
         app.get(urlPre + '/', function (req, res, next) {
-            var home = config.get('index').replace('.', '');
-            res.redirect(urlPre + home);
+            res.redirect(urlPre + config.get('index'));
         });
 
         // markdown文件路由
