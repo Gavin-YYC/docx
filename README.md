@@ -89,6 +89,9 @@ npm start /xxx/map.json
   // markdown文档的绝对路径, 默认为命令调起时配置文件路径的父目录。
   // 如 `pm2 start index.js -- /a/doc/map.json`  默认则取`/a/doc/`为文档目录, 如果配置有此属性,则以配置为准
   "path": "/home/work/docx",
+  
+  // 可以自定义二级目录
+  "urlPre": "/ala",
 
   // 需要忽略的目录名,不能被markdown正确解析的目录都应该加到这里来,可选
   "ignoreDir": ["img",".git",".svn"],
@@ -110,9 +113,6 @@ npm start /xxx/map.json
 
   // 默认文档路径,支持相对,绝对路径,可选
   "index": "/readme.md",
-
-  // 虚拟静态资源路径
-  "assetsDir": "/static/",
 
   // 是否启用拼音搜索, 启用后可以使用全拼或拼音首字母进行搜索, 可选, 默认为false
   "usePinyin": false,
