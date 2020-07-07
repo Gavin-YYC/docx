@@ -303,17 +303,18 @@ Docx.prototype = {
         if (Array.isArray(dirs) && dirs.length) {
             for (var i = 0; i < dirs.length; i++) {
                 var item = dirs[i] || {};
+                var path = urlPre + item.path;
                 if (!item) {
                     continue;
                 }
                 if (item.type === 'file') {
                     htmlStr += '<li class="nav nav-title docx-files" data-path="'
-                        + item.path + '" data-title="' + item.title
-                        + '"><a href="' + urlPre + item.path + '">' + item.title + '</a></li>';
+                        + path + '" data-title="' + item.title
+                        + '"><a href="' + path + '">' + item.title + '</a></li>';
                 }
 
                 else if (item.type === 'dir') {
-                    htmlStr += '<li data-dir="' + item.path + '" data-title="' + item.displayName
+                    htmlStr += '<li data-dir="' + path + '" data-title="' + item.displayName
                         + '" class="docx-dir"><a href="#" class="docx-dirsa">' + item.displayName
                         + '<span class="fa arrow"></span></a><ul class="docx-submenu">';
                     this.makeNav(item.child);
