@@ -145,13 +145,14 @@ module.exports = {
                     if (/^\.md$|html$|htm$/i.test(path.extname(it))) {
                         var basename = path.basename(it, path.extname(it));
                         var title = me.getMdTitle(childPath);
+                        var urlPre = config.get('urlPre');
                         dirCtt.push({
                             itemName: basename,
                             type: 'file',
                             path: relPath,
                             title: title
                         });
-                        pathMap[relPath.toLowerCase()] = relPath;
+                        pathMap[urlPre + relPath.toLowerCase()] = relPath;
                     }
                 }
             });

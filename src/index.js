@@ -78,6 +78,10 @@ Docx.prototype = {
             label: config.get('extUrls').label
         };
 
+        me.pageData = {
+            assetsDir: config.get('urlPre') + '/static'        
+        };
+
         // 读取缓存,用于搜索
         search.readCache(preData);
 
@@ -97,8 +101,7 @@ Docx.prototype = {
         app.set('views', me.themePath);
 
         // 静态资源访问
-        var assetsDir = config.get('assetsDir');
-        app.use(assetsDir, express.static(staticDir));
+        app.use(me.pageData.assetsDir, express.static(staticDir));
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({extended: false}));
 
@@ -204,12 +207,6 @@ Docx.prototype = {
         var mdPath = path.join(config.get('path'), pathName);
         var isPjax = headers['x-pjax'] === 'true';
 
-        var pageData = {
-            assetsDir: config.get('assetsDir')
-        };
-
-        console.log(mdPath);
-
         mdPath = decodeURIComponent(mdPath);
         fs.readFile(mdPath, 'utf8', function (err, file) {
             var content = '';
@@ -242,7 +239,7 @@ Docx.prototype = {
                         navData: htmlStr,
                         mdData: content,
                         editPath: editPath,
-                        pageData: pageData
+                        pageData: me.pageData
                     });
                     res.render('main', parseObj);
                 }
@@ -302,6 +299,7 @@ Docx.prototype = {
      * @param {Array} dirs 文件目录数组
      * */
     makeNav: function (dirs) {
+        var urlPre = config.get('urlPre');
         if (Array.isArray(dirs) && dirs.length) {
             for (var i = 0; i < dirs.length; i++) {
                 var item = dirs[i] || {};
@@ -311,7 +309,7 @@ Docx.prototype = {
                 if (item.type === 'file') {
                     htmlStr += '<li class="nav nav-title docx-files" data-path="'
                         + item.path + '" data-title="' + item.title
-                        + '"><a href="' + item.path + '">' + item.title + '</a></li>';
+                        + '"><a href="' + urlPre + item.path + '">' + item.title + '</a></li>';
                 }
 
                 else if (item.type === 'dir') {
@@ -366,7 +364,7 @@ Docx.prototype = {
     },
 
     /**
-     * docx中间节接口
+     * docx中间件接口
      *
      * @param {string} type 中间件类型
      * @param {function} fn 中间件实现
