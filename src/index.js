@@ -164,7 +164,7 @@ Docx.prototype = {
         app.all(urlPre + '/api/update', me.update.bind(me));
 
         // 委托其他静态资源
-        app.use('/', express.static(config.get('path')));
+        app.use(urlPre + '/', express.static(config.get('path')));
 
         // 路由容错处理
         app.get('*', function (req, res, next) {
