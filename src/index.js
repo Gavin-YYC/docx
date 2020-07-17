@@ -130,6 +130,10 @@ Docx.prototype = {
         var me = this;
         var urlPre = config.get('urlPre');
 
+        app.get('/', function (req, res, next) {
+            res.redirect(urlPre + config.get('index'));
+        });
+
         // 文档主路径
         app.get(urlPre + '/', function (req, res, next) {
             res.redirect(urlPre + config.get('index'));
@@ -144,7 +148,12 @@ Docx.prototype = {
                 me.mdHandler(req, res, next);
             }
             else {
-                console.log('没有页面', path);
+                if (!new RegExp('^' + urlPre).test(path)) {
+                    res.redirect(urlPre + path);
+                }
+                else {
+                    console.log('没有页面', path);
+                }
             }
         });
 
